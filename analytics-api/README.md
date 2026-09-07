@@ -53,27 +53,20 @@ SERVICE_NAME=analytics-api
 
 ## 4. API Endpoints
 
-### 1. Dashboard Overview Metrics
-- `GET /analytics/summary` - Returns overall statistics (log counts, level breakdown, error rate %, response times).
+### 1. Dashboard Overview & Aggregations
+- `GET /analytics/overview` - Returns total log counts, level breakdown (INFO, WARN, ERROR), error rate %, and average system latency.
+- `GET /analytics/failures` - Detailed failure metrics, critical event breakdowns, and recent error log records.
+- `GET /analytics/services` - Health and error rate breakdown per individual microservice (`auth-service`, `email-service`, `order-service`).
+- `GET /analytics/errors` - Error log aggregations grouped by event type and service.
 
-### 2. Log Explorer & Search
+### 2. Latency & Endpoint Performance
+- `GET /analytics/performance` - System-wide latency percentiles (p50, p95, p99) and response time distributions.
+- `GET /analytics/endpoints` - Endpoint performance metrics grouped by HTTP method and path.
+- `GET /analytics/endpoints/slow` - Ranked list of top slow endpoints (`responseTimeMs >= 500ms`).
+
+### 3. Log Explorer & Search
 - `GET /analytics/logs?page=1&limit=20&service=order-service&level=ERROR` - Filtered & paginated log search.
-
-### 3. Log Details
 - `GET /analytics/logs/:id` - Retrieve individual log document details by MongoDB `_id`.
 
 ### 4. Distributed Request Tracing
-- `GET /analytics/traces/:requestId` - Assembles execution timeline, total duration, service sequence, and status for a given `requestId`.
-
-### 5. Microservice Analytics
-- `GET /analytics/services` - Health and error rate breakdown per microservice.
-
-### 6. Failure Analysis
-- `GET /analytics/errors` - Error log aggregation grouped by event and service.
-
-### 7. Latency & Performance Breakdown
-- `GET /analytics/performance` - Percentiles (p50, p95, p99) and top slow endpoints.
-
-### 8. Log Exporting
-- `GET /analytics/logs/export?format=csv` - Streams logs in CSV format.
-- `GET /analytics/logs/export?format=json` - Streams logs in JSON format.
+- `GET /analytics/traces/:requestId` - Reconstructs execution timeline, total duration, service hop sequence, and status (`SUCCESS`/`FAILED`) for a correlation `requestId`.

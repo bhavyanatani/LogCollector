@@ -9,7 +9,10 @@ The **Auth Service** handles user registration, authentication, JWT token issuan
 - User Registration with hashed passwords (using `bcryptjs`).
 - User Authentication with JWT token issuance (`jsonwebtoken`).
 - Propagation of `X-Request-ID` across HTTP headers for distributed tracing.
-- Asynchronous log emission to the Log Collector Gateway upon authentication events (`USER_REGISTERED`, `LOGIN_SUCCESS`, `LOGIN_FAILED`, `LOGOUT_SUCCESS`).
+- Asynchronous log emission to the Log Collector Gateway upon authentication events:
+  - *Success*: `USER_REGISTERED`, `LOGIN_SUCCESS`, `LOGOUT_SUCCESS`
+  - *Validation & Security*: `USER_ALREADY_EXISTS`, `USER_NOT_FOUND`, `LOGIN_FAILED`, `INVALID_LOGIN_REQUEST`, `INVALID_REGISTRATION_REQUEST`, `INVALID_EMAIL`
+  - *Tracing*: `REQUEST_RECEIVED`, `REQUEST_COMPLETED`
 - Inter-service invocation to the Email Service (`POST /email/send`) to send welcome emails upon new user registration.
 
 ---
