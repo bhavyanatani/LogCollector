@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Product = require('./src/models/Product');
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27018/logcollector_db';
+const MONGODB_URI = 'mongodb://localhost:27018/logcollector_db';
 
 const sampleProducts = [
   {
