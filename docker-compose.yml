@@ -4,7 +4,6 @@ services:
   # Infrastructure: MongoDB Database
   mongodb:
     image: mongo:7.0
-    container_name: mongodb
     ports:
       - "27018:27017"
     volumes:
@@ -13,14 +12,12 @@ services:
   # Infrastructure: Redis Streams Queue
   redis:
     image: redis:7-alpine
-    container_name: redis
     ports:
       - "6379:6379"
 
   # Ingestion Pipeline: Log Collector Gateway
   log-collector:
     build: ./log-collector
-    container_name: log-collector
     ports:
       - "4000:4000"
     environment:
@@ -33,7 +30,6 @@ services:
   # Ingestion Pipeline: Log Processor Worker
   log-processor:
     build: ./log-processor
-    container_name: log-processor
     ports:
       - "4001:4001"
     environment:
@@ -48,7 +44,6 @@ services:
   # Backend: Analytics API
   analytics-api:
     build: ./analytics-api
-    container_name: analytics-api
     ports:
       - "4002:4002"
     environment:
@@ -60,7 +55,6 @@ services:
   # Microservice: Auth Service
   auth-service:
     build: ./auth
-    container_name: auth-service
     ports:
       - "3001:3001"
     environment:
@@ -75,7 +69,6 @@ services:
   # Microservice: Email Service
   email-service:
     build: ./email
-    container_name: email-service
     ports:
       - "3002:3002"
     environment:
@@ -89,7 +82,6 @@ services:
   # Microservice: Order Service
   order-service:
     build: ./orders
-    container_name: order-service
     ports:
       - "3003:3003"
     environment:
@@ -104,7 +96,6 @@ services:
   # Frontend: User Application
   user-app:
     build: ./Frontend/user-app
-    container_name: user-app
     ports:
       - "3000:3000"
     depends_on:
@@ -117,7 +108,6 @@ services:
       context: ./Frontend/admin-dashboard
       args:
         - NEXT_PUBLIC_ANALYTICS_API_URL=http://localhost:4002
-    container_name: admin-dashboard
     ports:
       - "3005:3005"
     depends_on:
